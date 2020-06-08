@@ -53,13 +53,20 @@ do
 			echo "Day #"$i" "${trackRecord[$i]};
 			i=$((i+1));
 		done
+		# echo ${trackRecord[@]};
 		break;
 	else
 		gameDay
-		trackRecord[$((dayCount-1))]=$wonLost;
+		trackRecord[$((dayCount))]=$wonLost;
 	fi
 	dayCount=$((dayCount+1));
 done
+echo "HIIII";
+# array=$trackRecord;
+# readarray -t sorted < <(for a in "${trackRecord[@]}"; do echo "$a"; done | sort | sort);
+sorted=($(printf '%s\n' "${trackRecord[@]}"|sort));
+# for a in "${sorted[@]}"; do echo "$a"; done
+echo ${sorted[@]};
 
 
 
