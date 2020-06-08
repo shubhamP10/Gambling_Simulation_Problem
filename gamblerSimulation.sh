@@ -30,6 +30,3 @@ do
 		fi
 	fi
 done
-echo "Total Wins = "$wins;
-echo "Total Losses = "$losses;
-echo "Balance = "$stake;
