@@ -7,6 +7,7 @@ balance=0;
 dayCount=1;
 wonLost=0;
 trackRecord=();
+
 gameDay()
 {
 	stake=100;
@@ -42,32 +43,44 @@ gameDay()
 	wonLost=$((100-stake));
 
 }
+gameMonth()
+{
+	while [ 1 ]
+	do
+		if [ $dayCount -gt 20 ]; 
+		then
+			echo "Monthly Record by Gambler";
+			i=1;
+			while [[ $i -le ${#trackRecord[@]} ]]; 
+			do
+				echo "Day #"$i" "${trackRecord[$i]};
+				i=$((i+1));
+			done
+			# echo ${trackRecord[@]};
+			break;
+		else
+			gameDay
+			trackRecord[$((dayCount))]=$wonLost;
+		fi
+		dayCount=$((dayCount+1));
+	done
+}
 while [ 1 ]
 do
-	if [ $dayCount -gt 20 ]; 
-	then
-		echo "Monthly Record by Gambler";
-		i=1;
-		while [[ $i -le ${#trackRecord[@]} ]]; 
-		do
-			echo "Day #"$i" "${trackRecord[$i]};
-			i=$((i+1));
-		done
-		# echo ${trackRecord[@]};
-		break;
-	else
-		gameDay
-		trackRecord[$((dayCount))]=$wonLost;
-	fi
-	dayCount=$((dayCount+1));
-done
-echo "HIIII";
-# array=$trackRecord;
-# readarray -t sorted < <(for a in "${trackRecord[@]}"; do echo "$a"; done | sort | sort);
-sorted=($(printf '%s\n' "${trackRecord[@]}"|sort));
-# for a in "${sorted[@]}"; do echo "$a"; done
-echo ${sorted[@]};
+	gameMonth
+	sorted=($(printf '%s\n' "${trackRecord[@]}"|sort));
+	echo ${sorted[@]};
 
+	read -p "Would You Like to Continue for Next Month? press 1 for YES or 0 for no " YN
+	if [ $YN -eq 1 ]
+	then
+		gameMonth
+	fi
+	if [ $YN -eq 0 ]
+	then
+		break;
+	fi
+done
 
 
 
