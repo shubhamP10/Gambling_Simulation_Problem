@@ -7,7 +7,8 @@ balance=0;
 dayCount=1;
 wonLost=0;
 trackRecord=();
-
+wonDay=0;
+lostDay=0;
 gameDay()
 {
 	stake=100;
@@ -24,6 +25,7 @@ gameDay()
 			losses=$((losses+1));
 			if [ $losses -eq 50 ];
 			then
+				lostDay=$((lostDay+1));
 				echo "Gambler Reached Maximum Losses";
 				break;
 			fi
@@ -33,6 +35,7 @@ gameDay()
 			wins=$((wins+1));
 			if [ $wins -eq 50 ]
 			then
+				wonDay=$((wonDay+1));
 				echo "Gambler Reached Maximum Wins";
 				break;
 			fi
@@ -47,7 +50,7 @@ gameMonth()
 {
 	while [ 1 ]
 	do
-		if [ $dayCount -gt 20 ]; 
+		if [ $dayCount -gt 30 ]; 
 		then
 			echo "Monthly Record by Gambler";
 			i=1;
@@ -56,6 +59,8 @@ gameMonth()
 				echo "Day #"$i" "${trackRecord[$i]};
 				i=$((i+1));
 			done
+			echo "Total Days Won "$wonDay;
+			echo "Total Days LOst "$lostDay;
 			# echo ${trackRecord[@]};
 			break;
 		else
@@ -68,8 +73,8 @@ gameMonth()
 while [ 1 ]
 do
 	gameMonth
-	sorted=($(printf '%s\n' "${trackRecord[@]}"|sort));
-	echo ${sorted[@]};
+	# sorted=($(printf '%s\n' "${trackRecord[@]}"|sort));
+	# echo ${sorted[@]};
 
 	read -p "Would You Like to Continue for Next Month? press 1 for YES or 0 for no " YN
 	if [ $YN -eq 1 ]
