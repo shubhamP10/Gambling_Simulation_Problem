@@ -9,6 +9,8 @@ wonLost=0;
 trackRecord=();
 wonDay=0;
 lostDay=0;
+luckDay=0;
+unluckDay=0;
 gameDay()
 {
 	stake=100;
@@ -60,12 +62,25 @@ gameMonth()
 				i=$((i+1));
 			done
 			echo "Total Days Won "$wonDay;
-			echo "Total Days LOst "$lostDay;
+			echo "Total Days Lost "$lostDay;
+			echo "Luckiest Day "$luckDay;
+			echo "unLuckiest Day "$unluckDay;
 			# echo ${trackRecord[@]};
 			break;
 		else
 			gameDay
 			trackRecord[$((dayCount))]=$wonLost;
+			if [ $dayCount -gt 1 ]; 
+			then
+				if [[ $wonLost -gt 0 && $wonLost -gt ${trackRecord[$((dayCount-1))]} ]]; 
+				then
+					luckDay=$dayCount;
+				elif [[ $wonLost -lt 0 && $wonLost -lt ${trackRecord[$((dayCount-1))]} ]]; 
+				then
+					unluckDay=$dayCount;
+				fi
+				
+			fi
 		fi
 		dayCount=$((dayCount+1));
 	done
@@ -86,6 +101,3 @@ do
 		break;
 	fi
 done
-
-
-
