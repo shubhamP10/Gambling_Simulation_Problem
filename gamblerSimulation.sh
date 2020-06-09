@@ -6,6 +6,8 @@ totalLost=0;
 balance=0;
 dayCount=1;
 wonLost=0;
+winDay=0;
+lostDay=0;
 trackRecord=();
 gameDay()
 {
@@ -24,6 +26,7 @@ gameDay()
 			losses=$((losses+1));
 			if [ $losses -eq 50 ];
 			then
+				lostDay=$((lostDay+1));
 				echo "Gambler Reached Maximum Losses";
 				break;
 			fi
@@ -33,6 +36,7 @@ gameDay()
 			wins=$((wins+1));
 			if [ $wins -eq 50 ]
 			then
+				winDay=$((winDay+1));
 				echo "Gambler Reached Maximum Wins";
 				break;
 			fi
@@ -45,7 +49,7 @@ gameDay()
 }
 while [ 1 ]
 do
-	if [ $dayCount -gt 20 ]; 
+	if [ $dayCount -gt 30 ]; 
 	then
 		i=1;
 		while [[ $i -le ${#trackRecord[@]} ]]; 
@@ -53,10 +57,12 @@ do
 			echo "Day #"$i" "${trackRecord[$i]};
 			i=$((i+1));
 		done
+		echo "Total Days Won "$winDay;
+		echo "Total Days lost "$lostDay;
 		break;
 	else
 		gameDay
-		trackRecord[$((dayCount-1))]=$wonLost;
+		trackRecord[$((dayCount))]=$wonLost;
 	fi
 	dayCount=$((dayCount+1));
 done
