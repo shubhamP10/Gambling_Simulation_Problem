@@ -30,3 +30,5 @@ do
 		fi
 	fi
 done
+echo "Total Wins "$wins;
+echo "Total Lost "$losses;
